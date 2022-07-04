@@ -1,15 +1,16 @@
-﻿using EmployeeTaskSolicy.Model;
+﻿using EmployeeTaskSolicy.Dto;
+using EmployeeTaskSolicy.Model;
 
 namespace EmployeeTaskSolicy.Repository
 {
     public interface IEmployeeRepository
     {
-        public Task<IEnumerable<Employee>> GetEmployes();
-        public Task<IEnumerable<Employee>> GetEmployee(int Id);
-        public Task<string> CreateDataEmployes();
-        public Task<string> AddEmployee(string FirstName, string LastName, int Age, string Country);
-        public Task<string> UpdateEmployee(int Id, string FirstName, string LastName, int Age, string Country);
-        public Task<string> DeleteEmployee(int Id);
+        public Task<IEnumerable<Employee>> GetEmployees();
+        public Task<Employee> GetEmployee(int id);
+        public Task<string> CreateDataEmployees();
+        public Task<Employee> AddEmployee(EmployeeDto employeeDto);
+        public Task<Employee> UpdateEmployee(EmployeeIdDto employeeIdDto);
+        public Task<bool> DeleteEmployee(int Id);
 
     }
 }

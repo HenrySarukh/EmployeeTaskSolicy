@@ -7,8 +7,9 @@ namespace EmployeeTaskSolicy.CreateDB
     {
         public static async void Create(EmployeeContext context)
         {
-            EmployeeRepository h = new EmployeeRepository(context);
-            await h.CreateDataEmployes();
+            EmployeeRepository employeeRepo = new EmployeeRepository(context);
+            await employeeRepo.CreateDataEmployees();
         }
     }
+
 }

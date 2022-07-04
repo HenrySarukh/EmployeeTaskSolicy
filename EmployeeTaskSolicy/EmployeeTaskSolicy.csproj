@@ -13,4 +13,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Services\" />
+    <None Remove="Extensions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Extensions\" />
+  </ItemGroup>
 </Project>
