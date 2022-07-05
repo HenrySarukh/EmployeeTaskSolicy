@@ -31,7 +31,7 @@ namespace EmployeeTaskSolicy.Controllers
         }
 
         [HttpGet]
-        [Route("getEmployee/{id}")]
+        [Route("{id}")]
         public async Task<IActionResult> GetEmployee([FromBody]int id)
         {
             if (id < 1)
