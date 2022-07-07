@@ -28,6 +28,4 @@ namespace EmployeeTaskSolicy.Extensions
             return employees.Select(employee => employee.ToEmployeeIdDto());
         }
     }
-
 }
-

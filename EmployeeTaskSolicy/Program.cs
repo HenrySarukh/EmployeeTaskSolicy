@@ -22,6 +22,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Employee}/{action=GetEmployees}/{id?}");
+});
+
 //Creating Db if it is not existing
 CreateDB.Create(new EmployeeContext(builder.Configuration));
 

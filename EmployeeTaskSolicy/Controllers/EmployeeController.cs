@@ -21,29 +21,27 @@ namespace EmployeeTaskSolicy.Controllers
             Problem();
 
         [HttpGet]
-        [Route("getEmployees")]
         public async Task<IActionResult> GetEmployees()
         {
             var employes = await _employeeService.GetEmployees();
             if (!employes.Any())
-                return Ok("Data is empty!\nAdd Data!");
+                return NotFound("Data is empty!\nAdd Data!");
             return Ok(employes);
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id:int:min(1)}")]
         public async Task<IActionResult> GetEmployee([FromBody]int id)
         {
             if (id < 1)
                 return BadRequest("Id must be positive number!");
             var employee = await _employeeService.GetEmployee(id);
             if (employee == null)
-                return Ok($"There is no employee with Id = {id}");
+                return NotFound($"There is no employee with Id = {id}");
             return Ok(employee);
         }
 
         [HttpPost]
-        [Route("addEmployee")]
         public async Task<IActionResult> AddEmployee([FromBody]EmployeeDto employee)
         {
             var result = await _employeeService.AddEmployee(employee);
@@ -51,22 +49,21 @@ namespace EmployeeTaskSolicy.Controllers
         }
 
         [HttpDelete]
-        [Route("deleteEmployee")]
+        [Route("{id:int:min(1)}")]
         public async Task<IActionResult> DeleteEmployee([FromBody]int id)
         {
             var result = await _employeeService.DeleteEmployee(id);
             if(result)
                 return Ok(result);
-            return BadRequest($"Employee with Id = {id} does not exist");
+            return NotFound($"Employee with Id = {id} does not exist");
         }
 
         [HttpPut]
-        [Route("updateEmployee")]
         public async Task<IActionResult> UpdateEmployee([FromBody]EmployeeIdDto employee)
         {
             var result = await _employeeService.UpdateEmployee(employee);
             if (result == null)
-                return BadRequest($"Employee with Id = {employee.Id} does not exist");
+                return NotFound($"Employee with Id = {employee.Id} does not exist");
             return Ok(result);
         }
     }
