@@ -1,23 +1,35 @@
+using EmployeeTaskSolicy.Context;
+using EmployeeTaskSolicy.CreateDB;
+using EmployeeTaskSolicy.Repository;
+using EmployeeTaskSolicy.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<EmployeeContext>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseExceptionHandler("api/Employee/Error");
 }
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Employee}/{action=GetEmployees}/{id?}");
+});
+
+//Creating Db if it is not existing
+CreateDB.Create(new EmployeeContext(builder.Configuration));
 
 app.Run();
